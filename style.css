@@ -16,7 +16,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; overflow-x: hidden; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
@@ -599,6 +599,10 @@ html[data-theme="dark"] {
   --shadow-sm: 0 8px 24px -12px rgba(0,0,0,.6);
 }
 html[data-theme="dark"] body { background: var(--bg); }
+/* 修复深色模式导航栏左右两端露出浅色底：外层 navbar 也需深色 */
+html[data-theme="dark"] .navbar { background: rgba(15, 18, 32, .82); }
+html[data-theme="dark"] .navbar.scrolled { background: rgba(15, 18, 32, .94); }
+html[data-theme="dark"] .nav-links.open { background: rgba(15, 18, 32, .98); }
 html[data-theme="dark"] .unlock-overlay,
 html[data-theme="dark"] .unlock-card,
 html[data-theme="dark"] .qr-box,
@@ -632,6 +636,40 @@ html[data-theme="dark"] kbd { background: #232a42; color: var(--ink); }
 .theme-toggle .icon-moon { display: none; }
 html[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
 html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+/* 导航右侧操作区 */
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+/* 小红书按钮（红色胶囊占位） */
+.xhs-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 38px; padding: 0 14px;
+  border: none; border-radius: 999px; cursor: pointer;
+  color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .2px;
+  background: linear-gradient(135deg, #ff4d6a, #ff2d55);
+  box-shadow: 0 6px 16px -6px rgba(255,45,85,.7);
+  transition: transform .2s, box-shadow .2s;
+}
+.xhs-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px -8px rgba(255,45,85,.9); }
+.xhs-btn:active { transform: translateY(0); }
+.xhs-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+
+/* GitHub 图标按钮 */
+.github-btn {
+  width: 38px; height: 38px; flex-shrink: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 11px;
+  background: var(--bg-soft); color: var(--ink-soft);
+  cursor: pointer; transition: .2s; text-decoration: none;
+}
+.github-btn:hover { color: var(--primary); border-color: var(--primary); transform: translateY(-1px); }
+.github-btn svg { width: 19px; height: 19px; }
+
+@media (max-width: 720px) {
+  .nav-actions { gap: 8px; }
+  .xhs-btn { width: 38px; padding: 0; justify-content: center; }
+  .xhs-btn span { display: none; }
+}
 
 /* ============ 搜索 + 每日一词工具栏 ============ */
 .toolbar-wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 20px 8px; position: relative; z-index: 2; }
