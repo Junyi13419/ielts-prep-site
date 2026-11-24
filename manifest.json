@@ -1,0 +1,15 @@
+{
+  "name": "雅思备考网·YASIBEIKAO",
+  "short_name": "雅思备考网",
+  "description": "免费雅思备考资源站：词汇、刷题、范文、模考、打卡学习中心",
+  "start_url": "./?sharecode=ZPAPPTY4KA",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f8fc",
+  "theme_color": "#6366f1",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

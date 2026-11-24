@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>雅思备考网·YASIBEIKAO · 我的备考服务</title>
+  <meta name="description" content="原创雅思备考资料包、个性化备考规划、免费资料领取与答疑。扫码咨询，少走弯路。" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="apple-touch-icon" href="../icon-192.png" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #6366f1; --primary-2: #8b5cf6;
+      --ink: #10162b; --ink-soft: #5a6478; --ink-muted: #8a93a7;
+      --line: #e7eaf2; --bg: #f7f8fc; --radius: 20px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--ink); line-height: 1.7;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+    /* 顶部 */
+    .topbar { position: sticky; top: 0; z-index: 100; background: rgba(247,248,252,.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+    .topbar-inner { max-width: 1000px; margin: 0 auto; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.5px; }
+    .brand-mark { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; color: #fff; font-size: 17px; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--primary-2)); }
+    .brand-mark svg { width: 19px; height: 19px; display: block; }
+    .brand-text { font-size: 16px; white-space: nowrap; }
+    .brand-en { font-size: 10px; font-weight: 700; color: var(--primary); letter-spacing: .5px; margin-left: 1px; }
+    .back { font-size: 14px; color: var(--primary); font-weight: 700; text-decoration: none; }
+    .back:hover { text-decoration: underline; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 60px 20px 44px; }
+    .kicker { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 2px; color: var(--primary); margin-bottom: 14px; }
+    .hero h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing: -1.5px; line-height: 1.2; margin-bottom: 16px; }
+    .hero h1 span { background: linear-gradient(100deg, var(--primary), var(--primary-2), #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p { font-size: 16px; color: var(--ink-soft); max-width: 620px; margin: 0 auto 26px; }
+    .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 13px; font-size: 14px; font-weight: 750; cursor: pointer; border: none; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+    .btn-primary { color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); box-shadow: 0 12px 28px -10px rgba(99,102,241,.8); }
+    .btn-primary:hover { transform: translateY(-3px); }
+    .btn-ghost { background: #fff; border: 1px solid var(--line); color: var(--ink); box-shadow: 0 8px 24px -12px rgba(24,32,74,.18); }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* 服务卡片 */
+    .section { margin-bottom: 56px; }
+    .sec-title { font-size: 26px; letter-spacing: -.8px; margin-bottom: 8px; text-align: center; }
+    .sec-sub { text-align: center; color: var(--ink-soft); font-size: 14px; margin-bottom: 30px; }
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: 0 8px 24px -12px rgba(24,32,74,.18); position: relative; overflow: hidden; }
+    .card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), transparent); }
+    .card.wide { grid-column: 1 / -1; }
+    .card-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .card-icon { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: var(--soft); flex-shrink: 0; }
+    .card h3 { font-size: 20px; }
+    .card .tag { font-size: 11px; font-weight: 800; color: var(--accent); background: var(--soft); padding: 3px 10px; border-radius: 999px; margin-left: auto; white-space: nowrap; }
+    .card > p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 16px; }
+    .list { display: grid; gap: 10px; margin-bottom: 18px; }
+    .list li { font-size: 14px; color: var(--ink); padding-left: 24px; position: relative; }
+    .list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+    .price { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-muted); padding-top: 16px; border-top: 1px dashed var(--line); }
+    .price strong { color: var(--accent); font-size: 15px; }
+    .open-qr { display: inline-block; margin-top: 16px; font-size: 14px; font-weight: 750; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; }
+    .open-qr:hover { text-decoration: underline; }
+
+    /* 流程 */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .step { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px 20px; text-align: center; }
+    .step-num { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; margin: 0 auto 14px; font-size: 17px; font-weight: 850; color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); }
+    .step h4 { font-size: 16px; margin-bottom: 6px; }
+    .step p { font-size: 13px; color: var(--ink-soft); }
+
+    /* FAQ */
+    .faq { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .faq details { border-bottom: 1px solid var(--line); }
+    .faq details:last-child { border-bottom: none; }
+    .faq summary { padding: 18px 24px; font-size: 15px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 20px; color: var(--primary); }
+    .faq details[open] summary::after { content: "−"; }
+    .faq .ans { padding: 0 24px 18px; font-size: 14px; color: var(--ink-soft); }
+
+    /* 底部转化条 */
+    .bottom-cta { background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899); border-radius: 22px; padding: 40px 30px; text-align: center; color: #fff; margin-bottom: 56px; }
+    .bottom-cta h2 { font-size: 26px; margin-bottom: 10px; }
+    .bottom-cta p { font-size: 15px; opacity: .92; margin-bottom: 22px; }
+    .bottom-cta .btn { background: #fff; color: var(--primary); }
+
+    .footer { text-align: center; color: var(--ink-muted); font-size: 12.5px; padding: 0 20px 50px; }
+    .footer p { margin-bottom: 4px; }
+
+    /* 二维码弹窗 */
+    .overlay { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(16,22,43,.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    .overlay.hidden { display: none; }
+    .modal { width: 100%; max-width: 380px; background: #fff; border-radius: 22px; padding: 30px 26px; text-align: center; box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); position: relative; }
+    .modal-close { position: absolute; top: 12px; right: 14px; width: 30px; height: 30px; border: none; border-radius: 50%; background: #f1f3f9; color: #8a93a7; cursor: pointer; font-size: 20px; line-height: 1; }
+    .modal h3 { font-size: 20px; margin-bottom: 8px; }
+    .modal > p { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+    .modal img { width: 220px; height: 220px; object-fit: contain; background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 8px; -webkit-touch-callout: default; }
+    .modal .tip { font-size: 12px; color: var(--ink-muted); margin-top: 12px; }
+
+    .wechat-fab { position: fixed; right: 22px; bottom: 26px; z-index: 500; width: 56px; height: 56px; border: none; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #fff; background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 10px 26px -8px rgba(34,197,94,.85); }
+    @media (max-width: 700px) {
+      .cards, .steps { grid-template-columns: 1fr; }
+      .hero { padding-top: 44px; }
+      .modal img { width: 200px; height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a href="../index.html" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 10 12 5 2 10l10 5 10-5Z" fill="currentColor" stroke="none"/>
+            <path d="M6 12v5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5"/>
+            <path d="M22 10v6"/>
+            <circle cx="22" cy="17" r="1.3" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="brand-text">雅思备考网<span class="brand-en">·YASIBEIKAO</span></span>
+      </a>
+      <a href="../index.html" class="back">← 返回资源总库</a>
+    </div>
+  </div>
+
+  <section class="hero wrap">
+    <span class="kicker">MY SERVICES</span>
+    <h1>备考路上，<span>有人带你少走弯路</span></h1>
+    <p>免费工具帮你把资料备齐，这里帮你把时间花在刀刃上。原创资料、定制规划、免费答疑，按需选择。</p>
+    <div class="cta-row">
+      <button class="btn btn-primary js-qr" type="button">扫码咨询 / 领取 →</button>
+      <a href="#services" class="btn btn-ghost">看看有哪些服务</a>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="section" id="services">
+      <h2 class="sec-title">我能提供什么</h2>
+      <p class="sec-sub">价格为"扫码咨询"，加微信后根据具体需求报价，不设固定门槛。</p>
+      <div class="cards">
+        <article class="card" style="--accent:#6366f1; --soft:#eef2ff;">
+          <div class="card-head">
+            <div class="card-icon">📒</div>
+            <h3>原创备考资料包</h3>
+            <span class="tag">主推</span>
+          </div>
+          <p>把散落各处的资料重新整理成一套有体系的笔记和模板，自己用过、验证过，直接拿来就能用。</p>
+          <ul class="list">
+            <li>核心词汇 + 同义替换速记表</li>
+            <li>写作万能句型与结构模板</li>
+            <li>听说读写分科备考计划表</li>
+            <li>高频考点与易错点清单</li>
+          </ul>
+          <div class="price">价格：<strong>扫码咨询</strong> · 按需报价</div>
+          <button class="open-qr js-qr" type="button">扫码咨询详情 →</button>
+        </article>
+
+        <article class="card" style="--accent:#ec4899; --soft:#fce7f3;">
+          <div class="card-head">
+            <div class="card-icon">🎯</div>
+            <h3>个性化备考规划</h3>
+          </div>
+          <p>根据你的基础、目标分和考试时间，帮你拆解每个阶段的任务，明确该重点攻哪一块。</p>
+          <ul class="list">
+            <li>摸底评估 + 目标分数拆解</li>
+            <li>每周学习与刷题任务安排</li>
+            <li>瓶颈期针对性调整建议</li>
+            <li>考前冲刺节奏规划</li>
+          </ul>
+          <div class="price">价格：<strong>扫码咨询</strong> · 按需报价</div>
+          <button class="open-qr js-qr" type="button">扫码咨询详情 →</button>
+        </article>
+
+        <article class="card wide" style="--accent:#10b981; --soft:#d1fae5;">
+          <div class="card-head">
+            <div class="card-icon">🎁</div>
+            <h3>免费资料领取与答疑</h3>
+            <span class="tag">免费</span>
+          </div>
+          <p>不需要任何费用，加微信就能领取我整理的进阶资料，备考中遇到问题也可以随时来问，能解答的都会尽力帮你。</p>
+          <ul class="list">
+            <li>免费领取整理好的进阶资料</li>
+            <li>备考问题随时答疑</li>
+            <li>资料持续更新，一次领取长期可用</li>
+          </ul>
+          <div class="price">价格：<strong>免费</strong> · 仅需加微信</div>
+          <button class="open-qr js-qr" type="button">扫码免费领取 →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="sec-title">怎么开始</h2>
+      <p class="sec-sub">三步，很简单</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>扫码加微信</h4>
+          <p>点页面任意"扫码"按钮，扫码添加</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>说说你的情况</h4>
+          <p>基础、目标分、考试时间，简单聊几句</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>拿方案 / 领资料</h4>
+          <p>合适的方案或免费资料直接发给你</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="sec-title">常见问题</h2>
+      <p class="sec-sub">你可能想先知道这些</p>
+      <div class="faq">
+        <details open>
+          <summary>免费资料和付费服务有什么区别？</summary>
+          <div class="ans">免费资料是我整理好的通用型内容，加微信即可领取；付费/咨询类服务是针对你个人情况的定制化内容，比如专属备考规划。你可以先领免费资料试试，再决定要不要进一步的服务。</div>
+        </details>
+        <details>
+          <summary>价格是怎么算的？</summary>
+          <div class="ans">不设固定价目表，加微信后根据你的具体需求（资料范围、规划周期等）报价。你可以先咨询，觉得合适再决定，没有任何强制。</div>
+        </details>
+        <details>
+          <summary>资料是原创的吗？会不会和网站上的免费资源重复？</summary>
+          <div class="ans">这里提供的是我自己在备考过程中重新整理、二次创作的笔记和模板，和网站上直达的第三方免费工具是互补关系——工具用来练，整理好的资料用来快速掌握方法和框架。</div>
+        </details>
+        <details>
+          <summary>加了微信一定会收到推销吗？</summary>
+          <div class="ans">不会。领资料、问问题都可以，按需沟通。你有任何备考问题随时来问，合不合适由你自己判断。</div>
+        </details>
+      </div>
+    </section>
+
+    <section class="bottom-cta">
+      <h2>先把免费资料领了，不吃亏</h2>
+      <p>扫下方二维码加微信，整理好的进阶资料直接发给你</p>
+      <button class="btn btn-primary js-qr" type="button">扫码领取 →</button>
+    </section>
+
+    <footer class="footer">
+      <p>本站为个人备考经验与资料整理，第三方工具版权归各原作者所有。</p>
+      <p>所有服务与资料均为原创整理，价格以微信沟通为准。</p>
+    </footer>
+  </div>
+
+  <!-- 二维码悬浮按钮 -->
+  <button class="wechat-fab js-qr" type="button" aria-label="查看微信二维码" title="扫码加微信">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M8.7 3C4.5 3 1 6 1 9.8c0 2.1 1.1 4 2.9 5.2L3 17.5l2.7-1.4c.9.3 1.9.5 3 .5h.6a5.6 5.6 0 0 1-.2-1.5c0-3.5 3.3-6.3 7.4-6.3h.6C16.4 5.4 13 3 8.7 3ZM6.2 8.3a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Zm5 0a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z"/><path d="M23 14.3c0-3-2.9-5.4-6.5-5.4s-6.5 2.4-6.5 5.4 2.9 5.4 6.5 5.4c.8 0 1.5-.1 2.2-.3l2.2 1.1-.6-2c1.7-1 2.7-2.5 2.7-4.2Zm-8.7-1.8a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Zm4.4 0a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Z"/></svg>
+  </button>
+
+  <!-- 二维码弹窗 -->
+  <div class="overlay hidden" id="overlay" role="dialog" aria-modal="true">
+    <div class="modal">
+      <button class="modal-close" id="modalClose" type="button" aria-label="关闭">×</button>
+      <h3>扫码加微信</h3>
+      <p>领取免费资料 / 咨询备考服务</p>
+      <img src="wechat-qr.png" alt="微信二维码" />
+      <div class="tip">长按保存到相册，或用微信扫一扫添加</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const overlay = document.getElementById('overlay');
+      const open = () => overlay.classList.remove('hidden');
+      const close = () => overlay.classList.add('hidden');
+      document.querySelectorAll('.js-qr').forEach(function (el) { el.addEventListener('click', open); });
+      document.getElementById('modalClose').addEventListener('click', close);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
+    })();
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () { navigator.serviceWorker.register('../sw.js').catch(function(){}); });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>雅思备考网·YASIBEIKAO · 免费雅思备考资源站</title>
+  <meta name="description" content="整理了 4 个全免费的雅思备考资源：学习笔记、刷题系统、范文题库、词库工具。不办会员，不找网盘，打开就能用。" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+</head>
+<body>
+
+  <!-- 加微信解锁弹窗 -->
+  <div class="unlock-overlay" id="unlockOverlay" role="dialog" aria-modal="true" aria-labelledby="unlockTitle">
+    <div class="unlock-card">
+      <button class="unlock-close" id="unlockClose" type="button" aria-label="关闭">×</button>
+      <div class="unlock-icon">💬</div>
+      <h2 id="unlockTitle">扫码加微信，领资料 / 做咨询</h2>
+      <p class="unlock-desc">免费进阶资料、原创笔记模板、个性化备考规划——扫码添加，按需领取或咨询。</p>
+
+      <div class="qr-box">
+        <img src="wechat-qr.png" alt="微信二维码" class="qr-img" />
+        <p class="qr-tip">长按二维码保存到相册，或用微信扫一扫添加</p>
+      </div>
+
+      <p class="unlock-steps">① 微信扫码　→　② 添加我为好友　→　③ 添加后点下方按钮进入</p>
+      <button class="unlock-btn" id="unlockBtn" type="button">我已添加，进入网站 →</button>
+      <p class="unlock-foot">已添加过？直接点上方按钮即可进入，本站会记住你的选择。</p>
+    </div>
+  </div>
+
+  <!-- 微信二维码悬浮按钮（随时查看） -->
+  <button class="wechat-fab" id="wechatFab" type="button" aria-label="查看微信二维码" title="加微信获取资源">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M8.7 3C4.5 3 1 6 1 9.8c0 2.1 1.1 4 2.9 5.2L3 17.5l2.7-1.4c.9.3 1.9.5 3 .5h.6a5.6 5.6 0 0 1-.2-1.5c0-3.5 3.3-6.3 7.4-6.3h.6C16.4 5.4 13 3 8.7 3ZM6.2 8.3a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Zm5 0a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z"/><path d="M23 14.3c0-3-2.9-5.4-6.5-5.4s-6.5 2.4-6.5 5.4 2.9 5.4 6.5 5.4c.8 0 1.5-.1 2.2-.3l2.2 1.1-.6-2c1.7-1 2.7-2.5 2.7-4.2Zm-8.7-1.8a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Zm4.4 0a.9.9 0 1 1 0-1.8.9.9 0 0 1 0 1.8Z"/></svg>
+  </button>
+
+  <!-- 背景装饰 -->
+  <div class="bg-orb orb-1" aria-hidden="true"></div>
+  <div class="bg-orb orb-2" aria-hidden="true"></div>
+
+  <!-- 导航 -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 10 12 5 2 10l10 5 10-5Z" fill="currentColor" stroke="none"/>
+            <path d="M6 12v5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5"/>
+            <path d="M22 10v6"/>
+            <circle cx="22" cy="17" r="1.3" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="brand-text">雅思备考网<span class="brand-en">·YASIBEIKAO</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#resources">资源库</a>
+        <a href="#roadmap">使用路线</a>
+        <a href="#compare">横向对比</a>
+        <a href="#service">我的服务</a>
+        <a href="learn/index.html">学习中心</a>
+        <a href="teacher/index.html">老师入驻</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换深色模式" title="切换深色模式">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="展开菜单">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 顶部 Hero -->
+  <section class="hero" id="top">
+    <div class="hero-content">
+      <div class="badge reveal">
+        <span class="badge-dot"></span>
+        100% 免费 · 无需会员
+      </div>
+      <h1 class="reveal">雅思备考，<br /><span class="gradient-text">不用再找网盘链接了</span></h1>
+      <p class="hero-sub reveal">
+        学习笔记、刷题系统、范文题库、同义替换词库、AI 练习工具——
+        这些早就给你整理好了，而且<strong>全部免费</strong>。
+        不比那些动不动就开会员的网盘资料香？
+      </p>
+      <div class="hero-cta reveal">
+        <a href="#resources" class="btn btn-primary">开始探索资源 <span class="arrow">↓</span></a>
+        <a href="#roadmap" class="btn btn-ghost">看使用路线</a>
+      </div>
+      <div class="hero-stats reveal">
+        <div class="stat">
+          <span class="stat-num" data-count="4">0</span>
+          <span class="stat-label">精选资源库</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="538">0</span>
+          <span class="stat-label">阅读同义替换</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="248">0</span>
+          <span class="stat-label">篇 Band 9 范文</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">¥0</span>
+          <span class="stat-label">全部免费</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 搜索 + 每日一词 -->
+  <section class="toolbar-wrap">
+    <div class="toolbar-inner">
+      <div class="search-box" id="searchBox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="siteSearch" placeholder="搜索资源、工具、备考关键词…" autocomplete="off" aria-label="站内搜索" />
+        <kbd>/</kbd>
+        <button class="search-clear" id="searchClear" type="button" aria-label="清空搜索" title="清空">×</button>
+      </div>
+      <div class="daily-card" id="dailyCard">
+        <span class="daily-tag">每日一词</span>
+        <span class="daily-word" id="dailyWord">—</span>
+        <span class="daily-mean" id="dailyMean">加载中…</span>
+        <button class="daily-next" id="dailyNext" type="button" title="换一个" aria-label="换一个词">↻</button>
+      </div>
+    </div>
+    <p class="search-result-tip" id="searchTip" hidden></p>
+  </section>
+
+  <!-- 资源卡片 -->
+  <section class="section" id="resources">
+    <div class="section-head reveal">
+      <span class="section-kicker">CURATED RESOURCES</span>
+      <h2>四大资源库，一次打包</h2>
+      <p>从词汇底盘到刷题系统，从范文参考到一站式资料站，各有所长。</p>
+      <button class="fav-filter" id="favFilter" type="button">☆ 只看收藏 <span id="favCount">0</span></button>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- 卡片 1 -->
+      <article class="res-card reveal" data-res="my-ielts" data-keywords="词汇 同义替换 听力 阅读 语法 打字 练习 538 179" style="--accent:#6366f1; --accent-soft:#eef2ff;">
+        <button class="fav-btn" data-fav="my-ielts" type="button" aria-label="收藏" title="收藏">☆</button>
+        <div class="card-top">
+          <div class="card-icon">📚</div>
+          <span class="card-tag tag-hot">中文首选</span>
+        </div>
+        <h3>my-ielts</h3>
+        <p class="card-owner">hefengxian / 雅思资源总库</p>
+        <p class="card-desc">
+          中文考生最实用的一个。雅思词汇真经、语法、听力 179 考点词、阅读 538 同义替换，全整理好了。
+        </p>
+        <div class="card-highlight">
+          <span class="hl-icon">✦</span>
+          练习站已内置在本站，点「在线练习」直接开刷——词汇、听力 179、阅读 538、打字练习都有，不用下载。
+        </div>
+        <div class="card-fit"><span>适合</span> 想集中刷词汇和同义替换的人</div>
+        <div class="card-links">
+          <a href="https://a775025d3fb18ebee.app.workbuddy.host/practice/index.html?sharecode=ZPAPPTY4KA" target="_blank" rel="noopener">在线练习 ↗</a>
+        </div>
+      </article>
+
+      <!-- 卡片 2 -->
+      <article class="res-card reveal" data-res="awesome" data-keywords="范文 题库 写作 口语 阅读 听力 模拟 Band9 248" style="--accent:#0ea5e9; --accent-soft:#e0f2fe;">
+        <button class="fav-btn" data-fav="awesome" type="button" aria-label="收藏" title="收藏">☆</button>
+        <div class="card-top">
+          <div class="card-icon">🧪</div>
+          <span class="card-tag">题库最全</span>
+        </div>
+        <h3>awesome-IELTS</h3>
+        <p class="card-owner">shah0150 / 雅思测试总库</p>
+        <p class="card-desc">
+          外国考生整理的资源导航，作者本人听力 8、阅读 9、口语 8.5。阅读 225 套学术 + 100 套通用，写作 248 篇 Band 9 范文 + 100+ 篇 Band 8。
+        </p>
+        <div class="card-highlight">
+          <span class="hl-icon">✦</span>
+          口语 Part 1/2/3 话题库和词汇齐备，含 Academic 与 General 两套模拟测试。
+        </div>
+        <div class="card-fit"><span>适合</span> 需要大量练题和范文参考的人</div>
+        <div class="card-links">
+          <a href="https://a775025d3fb18ebee.app.workbuddy.host/awesome/index.html?sharecode=ZPAPPTY4KA" target="_blank" rel="noopener">打开资源清单 ↗</a>
+        </div>
+      </article>
+
+      <!-- 卡片 3 -->
+      <article class="res-card reveal" data-res="ielts-practice" data-keywords="刷题 错题 套题 阅读 听力 成绩 练习 系统" style="--accent:#f59e0b; --accent-soft:#fef3c7;">
+        <button class="fav-btn" data-fav="ielts-practice" type="button" aria-label="收藏" title="收藏">☆</button>
+        <div class="card-top">
+          <div class="card-icon">💻</div>
+          <span class="card-tag">本地刷题</span>
+        </div>
+        <h3>IELTS-practice</h3>
+        <p class="card-owner">sallowayma-git / 雅思阅读练习</p>
+        <p class="card-desc">
+          一个本地刷题系统，阅读和听力都能练。支持题库浏览、套题练习、成绩记录、错题分析、数据备份，还能导入自己的题库。
+        </p>
+        <div class="card-highlight">
+          <span class="hl-icon">✦</span>
+          已内置到本站，点「打开刷题系统」直接用——题库浏览、套题练习、错题分析、成绩记录都在，无需下载。
+        </div>
+        <div class="card-fit"><span>适合</span> 想要系统化刷题 + 记录错题的人</div>
+        <div class="card-links">
+          <a href="https://a775025d3fb18ebee.app.workbuddy.host/practice-atlas/index.html?sharecode=ZPAPPTY4KA" target="_blank" rel="noopener">打开刷题系统 ↗</a>
+        </div>
+      </article>
+
+      <!-- 卡片 4 -->
+      <article class="res-card reveal" data-res="zeeklog" data-keywords="真题 音频 范文 剑桥 资料 听力 一站式 PDF" style="--accent:#10b981; --accent-soft:#d1fae5;">
+        <button class="fav-btn" data-fav="zeeklog" type="button" aria-label="收藏" title="收藏">☆</button>
+        <div class="card-top">
+          <div class="card-icon">🗂️</div>
+          <span class="card-tag">资料最全</span>
+        </div>
+        <h3>zeeklog/IELTS</h3>
+        <p class="card-owner">zeeklog / 雅思资源总库</p>
+        <p class="card-desc">
+          资料最全的中文仓库。剑桥真题、听力音频、写作范文、考试宝典，按听/说/读/写分类，支持在线预览 PDF 和音频。
+        </p>
+        <div class="card-highlight">
+          <span class="hl-icon">✦</span>
+          另有在线站点，界面做得挺舒服，按科目分类浏览很方便。
+        </div>
+        <div class="card-fit"><span>适合</span> 想要一站式资料站的人</div>
+        <div class="card-links">
+          <a href="https://zeeklog.github.io/IELTS/" target="_blank" rel="noopener">在线站点 ↗</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 使用路线图 -->
+  <section class="section roadmap-section" id="roadmap">
+    <div class="section-head reveal">
+      <span class="section-kicker">HOW TO USE</span>
+      <h2>四步，搭起你的备考闭环</h2>
+      <p>别贪多，按顺序来。底盘 → 刷题 → 范文 → 补充，一步一个脚印。</p>
+    </div>
+
+    <div class="roadmap">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>先打底盘 · 词汇与同义替换</h3>
+          <p>打开 <strong>my-ielts</strong> 在线站，把词汇真经和 538 同义替换过一遍。这是阅读和听力的地基，后面提速全靠它。</p>
+          <span class="step-tool">工具：my-ielts 在线练习</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>系统刷题 · 套题 + 错题记录</h3>
+          <p>用 <strong>IELTS-practice</strong> 本地系统，套题练习和错题记录一条龙，比在网页上东找西找效率高太多。</p>
+          <span class="step-tool">工具：IELTS-practice</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>写作进阶 · 学结构别背范文</h3>
+          <p>拿 <strong>awesome-IELTS</strong> 里的 Band 9 范文当参考，学结构和逻辑，千万别背——背了考官听得出来。</p>
+          <span class="step-tool">工具：awesome-IELTS 范文库</span>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>查漏补缺 · 当资料库用</h3>
+          <p><strong>zeeklog/IELTS</strong> 当补充资料站，查范文、听听力音频很方便，但真题 PDF 不建议下载。</p>
+          <span class="step-tool">工具：zeeklog/IELTS 在线站</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 横向对比 -->
+  <section class="section" id="compare">
+    <div class="section-head reveal">
+      <span class="section-kicker">QUICK COMPARE</span>
+      <h2>一眼看懂，各自强在哪</h2>
+      <p>按你的短板对号入座，选一个主攻，其余做补充。</p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>资源库</th>
+            <th>核心强项</th>
+            <th>使用方式</th>
+            <th>适合人群</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="资源库"><span class="td-name" style="--dot:#6366f1">my-ielts</span></td>
+            <td data-label="核心强项">词汇 / 同义替换</td>
+            <td data-label="使用方式">在线直接刷</td>
+            <td data-label="适合人群">打基础、练词汇</td>
+          </tr>
+          <tr>
+            <td data-label="资源库"><span class="td-name" style="--dot:#0ea5e9">awesome-IELTS</span></td>
+            <td data-label="核心强项">海量真题 / 范文</td>
+            <td data-label="使用方式">链接合集导航</td>
+            <td data-label="适合人群">大量练题、找范文</td>
+          </tr>
+          <tr>
+            <td data-label="资源库"><span class="td-name" style="--dot:#f59e0b">IELTS-practice</span></td>
+            <td data-label="核心强项">刷题 + 错题分析</td>
+            <td data-label="使用方式">本地离线运行</td>
+            <td data-label="适合人群">系统化刷题记录</td>
+          </tr>
+          <tr>
+            <td data-label="资源库"><span class="td-name" style="--dot:#10b981">zeeklog/IELTS</span></td>
+            <td data-label="核心强项">一站式资料站</td>
+            <td data-label="使用方式">在线分类浏览</td>
+            <td data-label="适合人群">查资料、听音频</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 我的服务 -->
+  <section class="section service-section" id="service">
+    <div class="section-head reveal">
+      <span class="section-kicker">MY SERVICES</span>
+      <h2>光有资料不够，还需要有人带你走</h2>
+      <p>上面的工具免费拿去用。如果你想少走弯路，我把备考过程中自己整理的资料和规划方法也分享出来。</p>
+    </div>
+
+    <div class="service-grid">
+      <article class="service-card reveal" style="--accent:#6366f1; --soft:#eef2ff;">
+        <div class="service-icon">📒</div>
+        <h3>原创备考资料包</h3>
+        <p>把散落各处的资料重新整理成一套有体系的笔记、模板和计划表，从词汇到写作一应俱全，省去你自己东拼西凑的时间。</p>
+        <ul class="service-list">
+          <li>核心词汇 + 同义替换速记表</li>
+          <li>写作万能句型与模板</li>
+          <li>听说读写备考计划表</li>
+        </ul>
+        <button class="service-btn js-open-qr" type="button">扫码咨询详情 →</button>
+      </article>
+
+      <article class="service-card reveal" style="--accent:#ec4899; --soft:#fce7f3;">
+        <div class="service-icon">🎯</div>
+        <h3>个性化备考规划</h3>
+        <p>根据你的基础、目标分和考试时间，帮你梳理每个阶段该做什么、重点攻哪块，把有限的时间花在提分最快的地方。</p>
+        <ul class="service-list">
+          <li>摸底评估 + 目标拆解</li>
+          <li>每周学习任务安排</li>
+          <li>瓶颈期针对性建议</li>
+        </ul>
+        <button class="service-btn js-open-qr" type="button">扫码咨询详情 →</button>
+      </article>
+
+      <article class="service-card reveal" style="--accent:#10b981; --soft:#d1fae5;">
+        <div class="service-icon">🎁</div>
+        <h3>免费资料与答疑</h3>
+        <p>加微信即可免费领取我整理的进阶资料，备考中遇到问题也可以随时来问，能解答的都会尽力帮你。</p>
+        <ul class="service-list">
+          <li>免费领取整理好的资料</li>
+          <li>备考问题随时答疑</li>
+          <li>资料持续更新</li>
+        </ul>
+        <button class="service-btn js-open-qr" type="button">扫码领取 →</button>
+      </article>
+    </div>
+
+    <div class="service-more reveal">
+      <p>想了解资料的具体内容和获取方式？</p>
+      <a href="service/index.html" class="btn btn-primary">查看服务详情 <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- 老师入驻招募 -->
+  <section class="section teacher-cta reveal" id="teacher-cta">
+    <div class="teacher-cta-inner">
+      <div class="teacher-cta-icon">👨‍🏫</div>
+      <div class="teacher-cta-copy">
+        <span class="teacher-cta-kicker">TEACHER PROGRAM</span>
+        <h2>雅思老师看过来：入驻平台，90% 收入归你</h2>
+        <p>发布课程、原创资料和陪练服务，平台只收 10% 维护费，流量、结算、客服我们来负责。注册即开通老师主页。</p>
+      </div>
+      <a href="teacher/index.html" class="btn btn-primary">了解老师入驻 <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 10 12 5 2 10l10 5 10-5Z" fill="currentColor" stroke="none"/>
+            <path d="M6 12v5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5"/>
+            <path d="M22 10v6"/>
+            <circle cx="22" cy="17" r="1.3" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="brand-text">雅思备考网<span class="brand-en">·YASIBEIKAO</span></span>
+      </div>
+      <p>四个仓库加起来，词汇、刷题、范文、资料全齐了。祝你早日上岸 🎯</p>
+      <p>
+        <a href="service/index.html" style="color:#6366f1;font-weight:700;">看看我的备考服务 →</a>
+        &nbsp;·&nbsp;
+        <a href="teacher/index.html" style="color:#8b5cf6;font-weight:700;">老师入驻 →</a>
+      </p>
+      <p class="footer-note">本站为资源导航整理，第三方内容版权归各原作者所有。</p>
+    </div>
+  </footer>
+
+  <script src="words.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# 本地备份包与说明
+雅思备考网_源码备份_*.zip
+备份说明.md
+
+# 系统/缓存文件
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+.cache/
+
+# 注意：practice/ 与 practice-atlas/ 第三方资源按要求保留在仓库内

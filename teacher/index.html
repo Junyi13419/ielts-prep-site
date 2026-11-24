@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>老师入驻中心 · 雅思备考网·YASIBEIKAO</title>
+  <meta name="description" content="入驻雅思备考网平台，发布你的雅思课程与资料，平台仅收取 10% 维护费，其余全部归你。" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="apple-touch-icon" href="../icon-192.png" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #6366f1; --primary-2: #8b5cf6;
+      --ink: #10162b; --ink-soft: #5a6478; --ink-muted: #8a93a7;
+      --line: #e7eaf2; --bg: #f7f8fc; --radius: 20px;
+      --green: #10b981; --amber: #f59e0b;
+    }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg); color: var(--ink); line-height: 1.7;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+
+    /* 背景光球 */
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .5; z-index: 0; pointer-events: none; }
+    .orb.a { width: 320px; height: 320px; background: #c7d2fe; top: -80px; left: -100px; }
+    .orb.b { width: 300px; height: 300px; background: #ddd6fe; top: 380px; right: -120px; }
+
+    /* 顶部 */
+    .topbar { position: sticky; top: 0; z-index: 100; background: rgba(247,248,252,.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+    .topbar-inner { max-width: 1040px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.5px; }
+    .brand-mark { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; color: #fff; font-size: 17px; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--primary-2)); }
+    .brand-mark svg { width: 19px; height: 19px; display: block; }
+    .brand-text { font-size: 16px; white-space: nowrap; }
+    .brand-en { font-size: 10px; font-weight: 700; color: var(--primary); letter-spacing: .5px; margin-left: 1px; }
+    .back { font-size: 14px; color: var(--ink-soft); font-weight: 600; text-decoration: none; }
+    .back:hover { color: var(--primary); }
+    .top-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-top { font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 10px; cursor: pointer; border: 1px solid var(--line); background: #fff; color: var(--ink); transition: .2s; }
+    .btn-top.fill { background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: #fff; border-color: transparent; }
+    .btn-top:hover { transform: translateY(-2px); }
+
+    /* Hero */
+    .hero { position: relative; text-align: center; padding: 64px 20px 44px; z-index: 1; }
+    .kicker { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 2px; color: var(--primary); margin-bottom: 14px; }
+    .hero h1 { font-size: clamp(30px, 5vw, 46px); letter-spacing: -1.5px; line-height: 1.2; margin-bottom: 16px; }
+    .hero h1 span { background: linear-gradient(100deg, var(--primary), var(--primary-2), #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p { font-size: 16px; color: var(--ink-soft); max-width: 640px; margin: 0 auto 26px; }
+    .hero-stats { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+    .hero-stat b { display: block; font-size: 30px; letter-spacing: -1px; background: linear-gradient(135deg, var(--primary), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-stat span { font-size: 13px; color: var(--ink-muted); }
+    .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border-radius: 13px; font-size: 15px; font-weight: 750; cursor: pointer; border: none; text-decoration: none; transition: transform .2s, box-shadow .2s; }
+    .btn-primary { color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); box-shadow: 0 12px 28px -10px rgba(99,102,241,.8); }
+    .btn-primary:hover { transform: translateY(-3px); }
+    .btn-ghost { background: #fff; border: 1px solid var(--line); color: var(--ink); box-shadow: 0 8px 24px -12px rgba(24,32,74,.18); }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* 区块通用 */
+    .section { margin-bottom: 60px; position: relative; z-index: 1; }
+    .sec-head { text-align: center; margin-bottom: 32px; }
+    .sec-kicker { font-size: 12px; font-weight: 800; letter-spacing: 2px; color: var(--primary); }
+    .sec-title { font-size: clamp(23px, 3.5vw, 30px); letter-spacing: -.8px; margin: 8px 0; }
+    .sec-sub { color: var(--ink-soft); font-size: 14.5px; max-width: 640px; margin: 0 auto; }
+
+    /* 权益卡片 */
+    .perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .perk { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; box-shadow: 0 8px 24px -12px rgba(24,32,74,.18); }
+    .perk-icon { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-size: 23px; background: var(--soft); margin-bottom: 16px; }
+    .perk h3 { font-size: 18px; margin-bottom: 8px; }
+    .perk p { font-size: 14px; color: var(--ink-soft); }
+
+    /* 10% 抽成说明 */
+    .fee-card {
+      background: linear-gradient(135deg, #eef2ff, #faf5ff);
+      border: 1px solid #e0e7ff; border-radius: 24px; padding: 40px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+    }
+    .fee-split { text-align: center; }
+    .fee-ring {
+      width: 200px; height: 200px; margin: 0 auto 16px; border-radius: 50%;
+      display: grid; place-items: center; position: relative;
+      background: conic-gradient(var(--primary) 0 90%, #e0e7ff 90% 100%);
+    }
+    .fee-ring::after { content: ""; position: absolute; inset: 22px; border-radius: 50%; background: #fff; }
+    .fee-ring-inner { position: relative; z-index: 1; text-align: center; }
+    .fee-ring-inner b { font-size: 40px; letter-spacing: -2px; background: linear-gradient(135deg, var(--primary), var(--primary-2)); -webkit-background-clip: text; background-clip: text; color: transparent; display: block; }
+    .fee-ring-inner span { font-size: 12px; color: var(--ink-muted); }
+    .fee-legend { display: flex; gap: 20px; justify-content: center; font-size: 12px; color: var(--ink-soft); }
+    .fee-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+    .fee-copy h3 { font-size: 22px; margin-bottom: 12px; }
+    .fee-copy > p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 16px; }
+    .fee-list { display: grid; gap: 10px; }
+    .fee-list li { font-size: 14px; padding-left: 26px; position: relative; color: var(--ink); }
+    .fee-list li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%; background: var(--green); color: #fff; font-size: 11px; display: grid; place-items: center; }
+
+    /* 收益计算器 */
+    .calc { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; max-width: 620px; margin: 0 auto; box-shadow: var(--shadow-sm); }
+    .calc-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+    .calc-row label { font-size: 14px; font-weight: 600; white-space: nowrap; min-width: 96px; }
+    .calc-row input[type=range] { flex: 1; accent-color: var(--primary); }
+    .calc-val { font-size: 15px; font-weight: 800; color: var(--primary); min-width: 92px; text-align: right; }
+    .calc-out { margin-top: 22px; border-top: 1px dashed var(--line); padding-top: 20px; }
+    .calc-line { display: flex; justify-content: space-between; padding: 7px 0; font-size: 14px; }
+    .calc-line .v { font-weight: 750; }
+    .calc-line.fee .v { color: var(--amber); }
+    .calc-line.net { font-size: 18px; border-top: 1px solid var(--line); margin-top: 8px; padding-top: 14px; }
+    .calc-line.net .v { color: var(--green); font-size: 22px; }
+
+    /* 流程 */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .step { text-align: center; position: relative; }
+    .step-num { width: 52px; height: 52px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--primary), var(--primary-2)); color: #fff; font-size: 20px; font-weight: 800; box-shadow: 0 10px 24px -10px rgba(99,102,241,.9); }
+    .step h4 { font-size: 15px; margin-bottom: 4px; }
+    .step p { font-size: 12.5px; color: var(--ink-muted); }
+
+    /* 注册/工作台 */
+    .auth-wrap { max-width: 640px; margin: 0 auto; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .auth-tabs { display: flex; border-bottom: 1px solid var(--line); }
+    .auth-tab { flex: 1; padding: 16px; text-align: center; font-size: 15px; font-weight: 750; color: var(--ink-muted); cursor: pointer; transition: .2s; }
+    .auth-tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+    .auth-body { padding: 30px 32px 34px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+    .field input, .field select { padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 11px; font-size: 14px; font-family: inherit; color: var(--ink); background: #fff; outline: none; transition: .2s; }
+    .field input:focus, .field select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99,102,241,.1); }
+    .field input::placeholder { color: #b6bdcc; }
+    .form-note { font-size: 12px; color: var(--ink-muted); margin: 16px 0 0; line-height: 1.6; }
+    .auth-submit { width: 100%; margin-top: 22px; }
+    .form-msg { font-size: 13px; margin-top: 14px; padding: 10px 14px; border-radius: 10px; display: none; }
+    .form-msg.ok { display: block; background: #ecfdf5; color: #047857; }
+    .form-msg.err { display: block; background: #fef2f2; color: #b91c1c; }
+
+    /* 资质上传 */
+    .doc-upload { margin-top: 20px; }
+    .doc-upload-head label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+    .doc-required { font-size: 11px; font-weight: 700; color: var(--amber); background: #fef3c7; padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
+    .doc-upload-head p { font-size: 12px; color: var(--ink-muted); margin: 4px 0 12px; }
+    .doc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .doc-item { position: relative; border: 1.5px dashed #c7d2fe; border-radius: 14px; padding: 12px 10px; background: #fafaff; cursor: pointer; text-align: center; transition: .2s; min-width: 0; }
+    .doc-item:hover { border-color: var(--primary); background: #f5f6ff; }
+    .doc-item.filled { border-style: solid; border-color: var(--green); background: #f0fdf8; }
+    .doc-thumb { width: 100%; height: 62px; border-radius: 9px; background: #eef2ff; display: grid; place-items: center; overflow: hidden; margin-bottom: 8px; }
+    .doc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .doc-add { font-size: 26px; color: var(--primary); font-weight: 300; line-height: 1; }
+    .doc-item.filled .doc-add { display: none; }
+    .doc-meta { display: flex; flex-direction: column; min-width: 0; }
+    .doc-meta b { font-size: 12.5px; color: var(--ink); }
+    .doc-meta span { font-size: 10.5px; color: var(--ink-muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .doc-item.filled .doc-meta span { color: var(--green); }
+    .doc-del { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; border: none; background: #fee2e2; color: #b91c1c; font-size: 15px; cursor: pointer; display: none; line-height: 1; }
+    .doc-item.filled .doc-del { display: block; }
+
+    /* 工作台资质 */
+    .dash-docs { background: var(--bg); border-radius: 14px; padding: 16px; margin-bottom: 18px; }
+    .dash-docs-head { font-size: 14px; font-weight: 750; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .dash-docs-status { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: #fef3c7; color: #92400e; }
+    .dash-doc-list { display: grid; gap: 8px; }
+    .dash-doc-row { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+    .dash-doc-row .doc-badge { width: 28px; height: 28px; border-radius: 8px; background: #ecfdf5; color: var(--green); display: grid; place-items: center; font-size: 14px; flex-shrink: 0; }
+    .dash-doc-row .doc-info { flex: 1; min-width: 0; }
+    .dash-doc-row .doc-info b { display: block; font-size: 12.5px; }
+    .dash-doc-row .doc-info span { font-size: 11px; color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+    .dash-doc-empty { font-size: 12.5px; color: var(--ink-muted); text-align: center; padding: 8px; }
+
+    /* 工作台 */
+    .dash { display: none; }
+    .dash.show { display: block; }
+    .auth-form.hide { display: none; }
+    .dash-head { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+    .dash-avatar { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 20px; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--primary-2)); }
+    .dash-head h3 { font-size: 18px; }
+    .dash-head p { font-size: 12.5px; color: var(--ink-muted); }
+    .dash-badge { margin-left: auto; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; background: #fef3c7; color: #92400e; }
+    .dash-badge.live { background: #ecfdf5; color: #047857; }
+    .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+    .dash-stat { background: var(--bg); border-radius: 14px; padding: 16px; text-align: center; }
+    .dash-stat b { display: block; font-size: 22px; color: var(--primary); }
+    .dash-stat span { font-size: 12px; color: var(--ink-muted); }
+    .dash-tip { font-size: 13px; color: var(--ink-soft); background: #f7f8fc; border-radius: 12px; padding: 14px 16px; line-height: 1.7; }
+    .logout { font-size: 12px; color: var(--ink-muted); background: none; border: none; cursor: pointer; text-decoration: underline; margin-left: 8px; }
+
+    /* FAQ */
+    .faq { max-width: 720px; margin: 0 auto; display: grid; gap: 12px; }
+    .faq details { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 0 20px; }
+    .faq summary { padding: 18px 0; font-size: 15px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 20px; color: var(--primary); font-weight: 400; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq details p { font-size: 14px; color: var(--ink-soft); padding-bottom: 18px; }
+
+    /* 底部 CTA */
+    .bottom-cta { text-align: center; background: linear-gradient(135deg, var(--primary), var(--primary-2)); border-radius: 24px; padding: 50px 24px; color: #fff; }
+    .bottom-cta h2 { font-size: clamp(24px, 4vw, 34px); margin-bottom: 12px; }
+    .bottom-cta p { font-size: 15px; opacity: .9; margin-bottom: 24px; }
+    .bottom-cta .btn-ghost { background: #fff; border: none; color: var(--primary); }
+
+    /* 页脚 */
+    .footer { text-align: center; padding: 30px 20px 40px; font-size: 13px; color: var(--ink-muted); }
+    .footer a { color: var(--primary); font-weight: 700; }
+
+    /* 悬浮按钮 */
+    .fab { position: fixed; right: 22px; bottom: 22px; z-index: 90; width: 56px; height: 56px; border-radius: 50%; border: 3px solid #fff; cursor: pointer; background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 12px 30px -8px rgba(34,197,94,.7); display: grid; place-items: center; font-size: 26px; animation: breathe 3s ease-in-out infinite; }
+    @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+
+    /* 二维码弹窗 */
+    .overlay { position: fixed; inset: 0; z-index: 200; background: rgba(16,22,43,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: grid; place-items: center; padding: 20px; }
+    .overlay.hidden { display: none; }
+    .qr-card { position: relative; width: 100%; max-width: 380px; background: #fff; border-radius: 24px; padding: 34px 28px 28px; text-align: center; box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); animation: pop .35s cubic-bezier(.22,1,.36,1); }
+    @keyframes pop { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .qr-close { position: absolute; top: 14px; right: 16px; width: 32px; height: 32px; border-radius: 50%; border: none; background: #f1f2f6; color: var(--ink-soft); font-size: 20px; cursor: pointer; line-height: 1; }
+    .qr-card h3 { font-size: 20px; margin-bottom: 6px; }
+    .qr-card p { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+    .qr-box { display: inline-block; padding: 14px; border: 1.5px dashed #c7d2fe; border-radius: 16px; background: #fafaff; }
+    .qr-box img { width: 190px; height: 190px; object-fit: contain; }
+    .qr-tip { font-size: 12px; color: var(--ink-muted); margin-top: 16px !important; }
+
+    @media (max-width: 760px) {
+      .perks, .steps { grid-template-columns: 1fr 1fr; }
+      .fee-card { grid-template-columns: 1fr; padding: 28px 22px; gap: 26px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+    }
+    @media (max-width: 480px) {
+      .perks, .steps, .dash-stats { grid-template-columns: 1fr; }
+      .auth-body { padding: 22px 18px 26px; }
+      .top-actions .btn-top:first-child { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 背景装饰 -->
+  <div class="orb a" aria-hidden="true"></div>
+  <div class="orb b" aria-hidden="true"></div>
+
+  <!-- 顶部 -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="../index.html" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 10 12 5 2 10l10 5 10-5Z" fill="currentColor" stroke="none"/>
+            <path d="M6 12v5c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-5"/>
+            <path d="M22 10v6"/>
+            <circle cx="22" cy="17" r="1.3" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="brand-text">雅思备考网<span class="brand-en">·YASIBEIKAO</span></span>
+      </a>
+      <div class="top-actions">
+        <a href="../index.html" class="back">← 返回首页</a>
+        <button class="btn-top fill" id="topJoin">立即入驻</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="kicker">TEACHER PROGRAM</span>
+    <h1>把你的专业能力，<br><span>变成持续收入</span></h1>
+    <p>入驻雅思备考网平台，发布课程、资料和答疑服务。我们负责流量与结算，你只管教学——<strong>平台仅收 10% 维护费，其余全归你</strong>。</p>
+    <div class="cta-row">
+      <button class="btn btn-primary" id="heroJoin">申请入驻 →</button>
+      <a href="#fee" class="btn btn-ghost">了解分成规则</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>10%</b><span>平台维护费</span></div>
+      <div class="hero-stat"><b>90%</b><span>老师到手</span></div>
+      <div class="hero-stat"><b>0</b><span>入驻门槛费</span></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <!-- 权益 -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-kicker">WHY JOIN</span>
+        <h2 class="sec-title">入驻后你能得到什么</h2>
+        <p class="sec-sub">从账号到结算，平台把基础设施都备好，你专注做教学就够了。</p>
+      </div>
+      <div class="perks">
+        <div class="perk" style="--soft:#eef2ff;">
+          <div class="perk-icon">👤</div>
+          <h3>专属老师主页</h3>
+          <p>注册即有个人主页，展示你的简介、课程和学生评价，平台流量直接导向你的页面。</p>
+        </div>
+        <div class="perk" style="--soft:#fce7f3;">
+          <div class="perk-icon">📚</div>
+          <h3>课程与资料上架</h3>
+          <p>自由发布雅思课程、原创资料和陪练服务，定价由你说了算，平台不干预。</p>
+        </div>
+        <div class="perk" style="--soft:#d1fae5;">
+          <div class="perk-icon">💰</div>
+          <h3>透明自动结算</h3>
+          <p>每笔订单自动结算，10% 维护费明码标价，收益明细随时可查，不玩暗箱。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10% 分成 -->
+    <section class="section" id="fee">
+      <div class="sec-head">
+        <span class="sec-kicker">FEE POLICY</span>
+        <h2 class="sec-title">10% 维护费，花在哪一目了然</h2>
+        <p class="sec-sub">我们只收一笔透明的费用，用于维持平台运转。剩下的，都是你的。</p>
+      </div>
+      <div class="fee-card">
+        <div class="fee-split">
+          <div class="fee-ring">
+            <div class="fee-ring-inner"><b>90%</b><span>老师到手</span></div>
+          </div>
+          <div class="fee-legend">
+            <span><i style="background:var(--primary)"></i>老师 90%</span>
+            <span><i style="background:#e0e7ff"></i>平台 10%</span>
+          </div>
+        </div>
+        <div class="fee-copy">
+          <h3>这 10%，我们用来做什么？</h3>
+          <p>平台维护费用于支撑让服务跑起来的每一项成本，不额外收取上架费、会员费或提现费：</p>
+          <ul class="fee-list">
+            <li>网站服务器、域名与稳定运行</li>
+            <li>支付通道与自动结算系统</li>
+            <li>平台推广带来的持续流量</li>
+            <li>内容审核与用户客服支持</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 收益计算器 -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-kicker">CALCULATOR</span>
+        <h2 class="sec-title">算算你能到手多少</h2>
+        <p class="sec-sub">拖动滑块，实时看看收入分成。</p>
+      </div>
+      <div class="calc">
+        <div class="calc-row">
+          <label>课程单价</label>
+          <input type="range" id="priceRange" min="50" max="1000" step="10" value="300" />
+          <span class="calc-val" id="priceVal">¥300</span>
+        </div>
+        <div class="calc-row">
+          <label>月订单数</label>
+          <input type="range" id="orderRange" min="1" max="100" step="1" value="20" />
+          <span class="calc-val" id="orderVal">20 单</span>
+        </div>
+        <div class="calc-out">
+          <div class="calc-line"><span>月流水</span><span class="v" id="gross">¥6,000</span></div>
+          <div class="calc-line fee"><span>平台维护费（10%）</span><span class="v" id="feeAmt">−¥600</span></div>
+          <div class="calc-line net"><span>你每月到手</span><span class="v" id="net">¥5,400</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 入驻流程 -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-kicker">HOW IT WORKS</span>
+        <h2 class="sec-title">四步完成入驻</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><h4>注册账号</h4><p>填写基本信息，创建老师账号</p></div>
+        <div class="step"><div class="step-num">2</div><h4>上传资质</h4><p>注册时上传身份证明与证书</p></div>
+        <div class="step"><div class="step-num">3</div><h4>开通主页</h4><p>审核通过即可上架课程</p></div>
+        <div class="step"><div class="step-num">4</div><h4>开始收款</h4><p>订单自动结算，按月提现</p></div>
+      </div>
+    </section>
+
+    <!-- 注册 / 登录 / 工作台 -->
+    <section class="section" id="register">
+      <div class="sec-head">
+        <span class="sec-kicker">TEACHER ACCOUNT</span>
+        <h2 class="sec-title">老师注册 / 登录</h2>
+        <p class="sec-sub">注册后即可查看你的老师工作台。</p>
+      </div>
+      <div class="auth-wrap">
+        <div class="auth-form" id="authForm">
+          <div class="auth-tabs">
+            <div class="auth-tab active" data-tab="register">注册账号</div>
+            <div class="auth-tab" data-tab="login">登录</div>
+          </div>
+          <div class="auth-body">
+            <form id="regForm">
+              <div class="form-grid">
+                <div class="field"><label>姓名 / 昵称</label><input type="text" id="regName" placeholder="怎么称呼你" required /></div>
+                <div class="field"><label>手机号</label><input type="tel" id="regPhone" placeholder="用于登录" required pattern="1[3-9]\d{9}" /></div>
+                <div class="field"><label>登录密码</label><input type="password" id="regPass" placeholder="至少 6 位" required minlength="6" /></div>
+                <div class="field"><label>擅长科目</label><select id="regSubject">
+                  <option>听力</option><option>阅读</option><option>写作</option><option>口语</option><option>全科</option>
+                </select></div>
+                <div class="field full"><label>微信号</label><input type="text" id="regWechat" placeholder="方便平台与你联系" /></div>
+              </div>
+
+              <!-- 资质资料上传 -->
+              <div class="doc-upload">
+                <div class="doc-upload-head">
+                  <label>资质资料上传 <span class="doc-required">至少一项</span></label>
+                  <p>上传证明材料有助于更快通过审核，支持图片 / PDF，单个不超过 5MB</p>
+                </div>
+                <div class="doc-grid">
+                  <label class="doc-item" data-slot="id">
+                    <input type="file" accept="image/*,.pdf" data-doc-input="id" hidden />
+                    <div class="doc-thumb" data-thumb="id"><span class="doc-add">+</span></div>
+                    <div class="doc-meta"><b>身份证明</b><span data-fname="id">点击上传</span></div>
+                    <button type="button" class="doc-del" data-del="id" title="移除">×</button>
+                  </label>
+                  <label class="doc-item" data-slot="cert">
+                    <input type="file" accept="image/*,.pdf" data-doc-input="cert" hidden />
+                    <div class="doc-thumb" data-thumb="cert"><span class="doc-add">+</span></div>
+                    <div class="doc-meta"><b>教师资格 / 学历</b><span data-fname="cert">点击上传</span></div>
+                    <button type="button" class="doc-del" data-del="cert" title="移除">×</button>
+                  </label>
+                  <label class="doc-item" data-slot="score">
+                    <input type="file" accept="image/*,.pdf" data-doc-input="score" hidden />
+                    <div class="doc-thumb" data-thumb="score"><span class="doc-add">+</span></div>
+                    <div class="doc-meta"><b>雅思成绩 / 其他</b><span data-fname="score">点击上传</span></div>
+                    <button type="button" class="doc-del" data-del="score" title="移除">×</button>
+                  </label>
+                </div>
+              </div>
+
+              <p class="form-note">注册即表示同意平台 10% 维护费规则。资料仅保存在本地用于演示，提交后请扫码把资质发给平台完成人工审核。</p>
+              <button type="submit" class="btn btn-primary auth-submit">提交注册 →</button>
+            </form>
+
+            <form id="loginForm" style="display:none;">
+              <div class="form-grid">
+                <div class="field full"><label>手机号</label><input type="tel" id="loginPhone" placeholder="注册手机号" required /></div>
+                <div class="field full"><label>密码</label><input type="password" id="loginPass" placeholder="登录密码" required /></div>
+              </div>
+              <button type="submit" class="btn btn-primary auth-submit">登录工作台 →</button>
+            </form>
+            <div class="form-msg" id="formMsg"></div>
+          </div>
+        </div>
+
+        <!-- 工作台 -->
+        <div class="dash" id="dash">
+          <div class="auth-body">
+            <div class="dash-head">
+              <div class="dash-avatar" id="dashAvatar">师</div>
+              <div><h3 id="dashName">老师</h3><p id="dashSubject">擅长科目</p></div>
+              <span class="dash-badge" id="dashBadge">待审核</span>
+            </div>
+            <div class="dash-stats">
+              <div class="dash-stat"><b id="dashOrders">0</b><span>本月订单</span></div>
+              <div class="dash-stat"><b id="dashGross">¥0</b><span>本月流水</span></div>
+              <div class="dash-stat"><b id="dashNet">¥0</b><span>预计到手</span></div>
+            </div>
+            <div class="dash-docs">
+              <div class="dash-docs-head">资质资料 <span class="dash-docs-status" id="dashDocStatus">待平台审核</span></div>
+              <div class="dash-doc-list" id="dashDocList"></div>
+            </div>
+            <div class="dash-tip" id="dashTip">你的账号已创建，资质资料正在等待平台审核。审核通过后即可上架课程并开始接单。<button class="logout" id="logoutBtn">退出登录</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="sec-head">
+        <span class="sec-kicker">FAQ</span>
+        <h2 class="sec-title">你可能想问</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>入驻需要交钱吗？</summary><p>不需要。注册和入驻完全免费，平台只在订单成交后收取 10% 维护费，没有上架费、会员费或提现费。</p></details>
+        <details><summary>10% 维护费怎么收？</summary><p>每笔订单自动扣除，比如学生支付 ¥300，平台收 ¥30 维护费，你到手 ¥270。收益明细在工作台随时可查。</p></details>
+        <details><summary>定价是我自己定吗？</summary><p>是的，课程和服务的定价完全由你决定，平台不干预、不抽成额外费用。</p></details>
+        <details><summary>资质资料会传到哪里？需要公开吗？</summary><p>资料仅用于资质审核，不会公开展示。请在注册时上传证明材料，并把资料发给平台完成人工审核；本演示站点的文件仅保存在你自己的浏览器本地。</p></details>
+        <details><summary>多久能审核通过？</summary><p>收到资质资料后一般 1–2 个工作日内完成审核，通过后立即开通老师主页。</p></details>
+      </div>
+    </section>
+
+    <!-- 底部 CTA -->
+    <section class="section">
+      <div class="bottom-cta">
+        <h2>准备好开始了吗？</h2>
+        <p>现在入驻，把你的雅思专长变成看得见的收入。</p>
+        <button class="btn btn-ghost js-qr" type="button">扫码联系平台 →</button>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p>雅思备考网·YASIBEIKAO 老师入驻中心 · 平台维护费 10%，收益规则透明公开</p>
+    <p><a href="../index.html">← 返回资源首页</a></p>
+  </footer>
+
+  <!-- 悬浮微信按钮 -->
+  <button class="fab js-qr" id="fab" title="扫码联系平台" aria-label="扫码联系平台">💬</button>
+
+  <!-- 二维码弹窗 -->
+  <div class="overlay hidden" id="overlay">
+    <div class="qr-card">
+      <button class="qr-close" id="qrClose" aria-label="关闭">×</button>
+      <h3>扫码发送资质资料</h3>
+      <p>长按二维码保存，或微信扫一扫添加</p>
+      <div class="qr-box"><img src="wechat-qr.png" alt="微信二维码" /></div>
+      <p class="qr-tip">添加后把资质截图发给平台，我们完成人工审核并开通主页</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // ===== 二维码弹窗 =====
+      const overlay = document.getElementById('overlay');
+      const openQR = () => { overlay.classList.remove('hidden'); };
+      const closeQR = () => { overlay.classList.add('hidden'); };
+      document.querySelectorAll('.js-qr, #topJoin, #heroJoin').forEach(el => el.addEventListener('click', openQR));
+      document.getElementById('qrClose').addEventListener('click', closeQR);
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeQR(); });
+
+      // ===== 收益计算器 =====
+      const priceR = document.getElementById('priceRange');
+      const orderR = document.getElementById('orderRange');
+      const money = n => '¥' + n.toLocaleString('zh-CN');
+      const calc = () => {
+        const price = +priceR.value, orders = +orderR.value;
+        const gross = price * orders, fee = Math.round(gross * 0.1), net = gross - fee;
+        document.getElementById('priceVal').textContent = money(price);
+        document.getElementById('orderVal').textContent = orders + ' 单';
+        document.getElementById('gross').textContent = money(gross);
+        document.getElementById('feeAmt').textContent = '−' + money(fee);
+        document.getElementById('net').textContent = money(net);
+      };
+      priceR.addEventListener('input', calc);
+      orderR.addEventListener('input', calc);
+      calc();
+
+      // ===== 注册 / 登录 tab =====
+      const tabs = document.querySelectorAll('.auth-tab');
+      const regForm = document.getElementById('regForm');
+      const loginForm = document.getElementById('loginForm');
+      const msg = document.getElementById('formMsg');
+      const showMsg = (text, ok) => { msg.textContent = text; msg.className = 'form-msg ' + (ok ? 'ok' : 'err'); };
+      tabs.forEach(tab => tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const isReg = tab.dataset.tab === 'register';
+        regForm.style.display = isReg ? '' : 'none';
+        loginForm.style.display = isReg ? 'none' : '';
+        msg.className = 'form-msg';
+      }));
+
+      // ===== 账号存储（本地演示） =====
+      const KEY = 'ielts_teacher_account';
+      const getAccount = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+      const saveAccount = a => {
+        try { localStorage.setItem(KEY, JSON.stringify(a)); return true; }
+        catch (e) { return false; } // 容量不足等
+      };
+      const SLOTS = { id: '身份证明', cert: '教师资格 / 学历', score: '雅思成绩 / 其他' };
+
+      // ===== 资质资料上传 =====
+      // 暂存每个槽的文件信息：{ name, size, type, thumb(dataURL|null) }
+      const docs = { id: null, cert: null, score: null };
+
+      const readFile = (file, slot) => {
+        if (file.size > 5 * 1024 * 1024) {
+          showMsg('「' + SLOTS[slot] + '」超过 5MB，请换一个更小的文件。', false);
+          return;
+        }
+        const info = { name: file.name, size: file.size, type: file.type, thumb: null };
+        docs[slot] = info; // 立即登记，避免异步缩略图未完成时提交漏判
+        const finish = () => { docs[slot] = info; renderDocSlot(slot, info); };
+        if (file.type.startsWith('image/')) {
+          // 生成压缩缩略图（最长边 160px），避免占用过多本地存储
+          const reader = new FileReader();
+          reader.onload = ev => {
+            const img = new Image();
+            img.onload = () => {
+              const scale = Math.min(1, 160 / Math.max(img.width, img.height));
+              const cv = document.createElement('canvas');
+              cv.width = Math.round(img.width * scale);
+              cv.height = Math.round(img.height * scale);
+              cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+              info.thumb = cv.toDataURL('image/jpeg', 0.7);
+              finish();
+            };
+            img.onerror = () => finish();
+            img.src = ev.target.result;
+          };
+          reader.onerror = () => finish();
+          reader.readAsDataURL(file);
+        } else {
+          finish();
+        }
+      };
+
+      const renderDocSlot = (slot, info) => {
+        const item = document.querySelector('[data-slot="' + slot + '"]');
+        const thumb = document.querySelector('[data-thumb="' + slot + '"]');
+        const fname = document.querySelector('[data-fname="' + slot + '"]');
+        if (info) {
+          thumb.innerHTML = info.thumb
+            ? '<img src="' + info.thumb + '" alt="预览" />'
+            : '<span style="font-size:22px;">📄</span>';
+          fname.textContent = info.name.length > 16 ? info.name.slice(0, 15) + '…' : info.name;
+          item.classList.add('filled');
+        } else {
+          thumb.innerHTML = '<span class="doc-add">+</span>';
+          fname.textContent = '点击上传';
+          item.classList.remove('filled');
+        }
+      };
+
+      document.querySelectorAll('[data-doc-input]').forEach(input => {
+        input.addEventListener('change', () => {
+          const slot = input.dataset.docInput;
+          if (input.files && input.files[0]) readFile(input.files[0], slot);
+        });
+      });
+      document.querySelectorAll('[data-del]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          const slot = btn.dataset.del;
+          docs[slot] = null;
+          const input = document.querySelector('[data-doc-input="' + slot + '"]');
+          if (input) input.value = '';
+          renderDocSlot(slot, null);
+        });
+      });
+
+      // 注册
+      regForm.addEventListener('submit', e => {
+        e.preventDefault();
+        // 同步当前文件到 docs（change 事件已处理，这里做兜底读取）
+        document.querySelectorAll('[data-doc-input]').forEach(input => {
+          const slot = input.dataset.docInput;
+          if (input.files && input.files[0] && !docs[slot]) readFile(input.files[0], slot);
+        });
+        const uploaded = Object.keys(docs).filter(k => docs[k]);
+        if (uploaded.length === 0) {
+          showMsg('请至少上传一项资质资料（身份证明 / 教师资格 / 雅思成绩）。', false);
+          document.querySelector('.doc-upload').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        const name = document.getElementById('regName').value.trim();
+        const phone = document.getElementById('regPhone').value.trim();
+        const pass = document.getElementById('regPass').value;
+        const subject = document.getElementById('regSubject').value;
+        const wechat = document.getElementById('regWechat').value.trim();
+        const docList = uploaded.map(k => ({ slot: k, label: SLOTS[k], ...docs[k] }));
+        const ok = saveAccount({ name, phone, pass, subject, wechat, docs: docList, orders: 0, status: 'pending' });
+        if (!ok) {
+          showMsg('资料过多导致本地存储已满，请减少图片数量后再试。', false);
+          return;
+        }
+        showMsg('✓ 注册成功，已收到 ' + docList.length + ' 份资质资料，等待平台审核。', true);
+        setTimeout(openQR, 500);
+      });
+
+      // 登录
+      loginForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const phone = document.getElementById('loginPhone').value.trim();
+        const pass = document.getElementById('loginPass').value;
+        const acc = getAccount();
+        if (!acc) { showMsg('还没有账号，请先切换到「注册账号」。', false); return; }
+        if (acc.phone !== phone || acc.pass !== pass) { showMsg('手机号或密码不正确，请重试。', false); return; }
+        renderDash(acc);
+      });
+
+      // ===== 工作台渲染 =====
+      const authForm = document.getElementById('authForm');
+      const dash = document.getElementById('dash');
+      const renderDash = acc => {
+        authForm.classList.add('hide');
+        dash.classList.add('show');
+        document.getElementById('dashAvatar').textContent = acc.name ? acc.name.charAt(0) : '师';
+        document.getElementById('dashName').textContent = acc.name;
+        document.getElementById('dashSubject').textContent = '擅长：' + acc.subject;
+        const gross = (acc.orders || 0) * 300;
+        document.getElementById('dashOrders').textContent = acc.orders || 0;
+        document.getElementById('dashGross').textContent = money(gross);
+        document.getElementById('dashNet').textContent = money(Math.round(gross * 0.9));
+
+        // 资质资料列表
+        const list = document.getElementById('dashDocList');
+        const docItems = acc.docs || [];
+        if (docItems.length === 0) {
+          list.innerHTML = '<div class="dash-doc-empty">尚未提交资质资料</div>';
+        } else {
+          list.innerHTML = docItems.map(d => {
+            const kb = d.size ? (d.size / 1024).toFixed(0) + ' KB' : '';
+            return '<div class="dash-doc-row"><span class="doc-badge">✓</span>' +
+              '<span class="doc-info"><b>' + (d.label || d.slot) + '</b><span>' + (d.name || '') + ' · ' + kb + '</span></span></div>';
+          }).join('');
+        }
+        const badge = document.getElementById('dashBadge');
+        badge.textContent = '待审核';
+        badge.className = 'dash-badge';
+      };
+
+      // 已登录则直接显示工作台
+      const existing = getAccount();
+      if (existing && existing._logged) renderDash(existing);
+
+      document.getElementById('logoutBtn').addEventListener('click', () => {
+        const acc = getAccount(); if (acc) { acc._logged = false; saveAccount(acc); }
+        dash.classList.remove('show');
+        authForm.classList.remove('hide');
+      });
+
+      // 登录成功后标记
+      loginForm.addEventListener('submit', () => {
+        const acc = getAccount(); if (acc) { acc._logged = true; saveAccount(acc); }
+      });
+    })();
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () { navigator.serviceWorker.register('../sw.js').catch(function(){}); });
+    }
+  </script>
+</body>
+</html>
